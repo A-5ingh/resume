@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import type { ThemeType } from './theme';
+import { fontConfig } from '../data/themeConfig';
 
 export const GlobalStyles = createGlobalStyle<{ theme: ThemeType }>`
   * {
@@ -9,9 +10,7 @@ export const GlobalStyles = createGlobalStyle<{ theme: ThemeType }>`
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: ${fontConfig.primary};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: ${({ theme }) => theme.background};
@@ -29,9 +28,12 @@ export const GlobalStyles = createGlobalStyle<{ theme: ThemeType }>`
     }
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: ${fontConfig.secondary};
+  }
+
   code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
+    font-family: ${fontConfig.secondary};
   }
 
   ::-webkit-scrollbar {

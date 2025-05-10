@@ -1,44 +1,16 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useProjects } from '../../context/ResumeContext';
+import { useState } from 'react';
+import type { Project } from '../../data/types';
 
 const Projects = () => {
-  const projects = [
-    {
-      title: 'JHipster Contribution',
-      category: 'Open Source',
-      description: 'Contributing to JHipster, an open-source development platform for quickly generating, developing, and deploying modern web applications and microservices.',
-      tech: ['Java', 'Spring Boot', 'Angular', 'React', 'Microservices'],
-      link: 'https://github.com/jhipster/generator-jhipster'
-    },
-    {
-      title: 'Kyverno Contribution',
-      category: 'Open Source',
-      description: 'Contributing to Kyverno, a policy engine designed for Kubernetes. Working on policy management and security implementations.',
-      tech: ['Kubernetes', 'Go', 'Policy as Code', 'Security'],
-      link: 'https://github.com/kyverno/kyverno'
-    },
-    {
-      title: 'Financial Domain Projects',
-      category: 'Industry',
-      description: 'Implemented cloud-native solutions and DevOps practices in the financial sector, focusing on secure and scalable infrastructure.',
-      tech: ['Cloud Architecture', 'DevOps', 'Security', 'Microservices'],
-      link: '#'
-    },
-    {
-      title: 'Insurance Platform',
-      category: 'Industry',
-      description: 'Developed and maintained insurance platforms using modern tech stack, implementing CI/CD pipelines and automated testing.',
-      tech: ['MEAN Stack', 'Azure', 'CI/CD', 'Automated Testing'],
-      link: '#'
-    },
-    {
-      title: 'Education Tech Solutions',
-      category: 'Industry',
-      description: 'Built scalable educational platforms, focusing on performance optimization and user experience.',
-      tech: ['MERN Stack', 'GCP', 'Performance Optimization'],
-      link: '#'
-    }
-  ];
+  const projects = useProjects();
+  const [filter, setFilter] = useState<'All' | 'Open Source' | 'Industry'>('All');
+  
+  const filteredProjects = filter === 'All' 
+    ? projects
+    : projects.filter(project => project.category === filter);
 
   return (
     <ProjectsSection id="projects">
@@ -50,12 +22,18 @@ const Projects = () => {
         Featured Projects
       </SectionTitle>
       <Categories>
-        <CategoryButton active>All</CategoryButton>
-        <CategoryButton>Open Source</CategoryButton>
-        <CategoryButton>Industry</CategoryButton>
+        <CategoryButton active={filter === 'All'} onClick={() => setFilter('All')}>
+          All
+        </CategoryButton>
+        <CategoryButton active={filter === 'Open Source'} onClick={() => setFilter('Open Source')}>
+          Open Source
+        </CategoryButton>
+        <CategoryButton active={filter === 'Industry'} onClick={() => setFilter('Industry')}>
+          Industry
+        </CategoryButton>
       </Categories>
       <ProjectGrid>
-        {projects.map((project, index) => (
+        {filteredProjects.map((project, index) => (
           <ProjectCard
             key={index}
             initial={{ opacity: 0, y: 20 }}

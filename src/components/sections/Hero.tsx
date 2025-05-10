@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
+import { usePersonalInfo, useSkills } from '../../context/ResumeContext';
+
 const Hero = () => {
+  const { name, role, summary } = usePersonalInfo();
+  const skills = useSkills();
+
   return (
     <HeroSection id="about">
       <ContentWrapper>
@@ -11,27 +16,21 @@ const Hero = () => {
           transition={{ duration: 0.5 }}
         >
           <Greeting>Hello, I'm</Greeting>
-          <Name>Amarbir Singh</Name>
-          <Title>DevOps Architect & Full Stack Developer</Title>
-          <Description>
-            With 14 years of experience in software development, cloud architecture, and DevOps,
-            I specialize in building scalable infrastructure and delivering robust solutions.
-            Certified in Azure and GCP, with expertise in MERN/MEAN stack development.
-          </Description>
-          <Stats>
-            <StatItem>
-              <StatNumber>14+</StatNumber>
-              <StatLabel>Years Experience</StatLabel>
-            </StatItem>
-            <StatItem>
-              <StatNumber>2</StatNumber>
-              <StatLabel>Cloud Certifications</StatLabel>
-            </StatItem>
-            <StatItem>
-              <StatNumber>2</StatNumber>
-              <StatLabel>Open Source Projects</StatLabel>
-            </StatItem>
-          </Stats>
+          <Name>{name}</Name>
+          <Title>{role}</Title>
+          <Description>{summary}</Description>
+          <SkillsPreview>
+            {skills.map((category) => (
+              <SkillCategory key={category.category}>
+                <SkillCategoryName>{category.category}</SkillCategoryName>
+                <SkillList>
+                  {category.items.slice(0, 3).map((skill) => (
+                    <SkillTag key={skill}>{skill}</SkillTag>
+                  ))}
+                </SkillList>
+              </SkillCategory>
+            ))}
+          </SkillsPreview>
           <CTAContainer>
             <PrimaryButton href="#contact">Get in Touch</PrimaryButton>
             <SecondaryButton href="https://github.com/a-5ingh" target="_blank">
@@ -158,6 +157,46 @@ const SecondaryButton = styled(Button)`
   &:hover {
     background-color: ${({ theme }) => theme.backgroundSecondary};
     transform: translateY(-2px);
+  }
+`;
+
+const SkillsPreview = styled.div`
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const SkillCategory = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const SkillCategoryName = styled.h3`
+  color: ${({ theme }) => theme.text};
+  font-size: 1.1rem;
+  font-weight: 600;
+`;
+
+const SkillList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
+
+const SkillTag = styled.span`
+  background-color: ${({ theme }) => theme.backgroundSecondary};
+  color: ${({ theme }) => theme.primary};
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.875rem;
+  border: 1px solid ${({ theme }) => theme.border};
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px ${({ theme }) => theme.shadow};
   }
 `;
 

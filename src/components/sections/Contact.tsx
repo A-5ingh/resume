@@ -1,8 +1,26 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { BsGithub, BsLinkedin, BsEnvelope, BsMedium } from 'react-icons/bs';
+import { usePersonalInfo, useSocial } from '../../context/ResumeContext';
 
 const Contact = () => {
+  const { name, email } = usePersonalInfo();
+  const socialLinks = useSocial();
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'BsGithub':
+        return <BsGithub />;
+      case 'BsLinkedin':
+        return <BsLinkedin />;
+      case 'BsEnvelope':
+        return <BsEnvelope />;
+      case 'BsMedium':
+        return <BsMedium />;
+      default:
+        return null;
+    }
+  };
   return (
     <ContactSection id="contact">
       <SectionTitle
@@ -19,18 +37,16 @@ const Contact = () => {
             Whether you have a question or just want to say hi, feel free to reach out!
           </InfoText>
           <SocialLinks>
-            <SocialLink href="https://github.com/a-5ingh" target="_blank" rel="noopener noreferrer">
-              <BsGithub /> GitHub
-            </SocialLink>
-            <SocialLink href="#" target="_blank" rel="noopener noreferrer">
-              <BsLinkedin /> LinkedIn
-            </SocialLink>
-            <SocialLink href="mailto:amarbir1800@gmail.com">
-              <BsEnvelope /> Email
-            </SocialLink>
-            <SocialLink href="#" target="_blank" rel="noopener noreferrer">
-              <BsMedium /> Medium
-            </SocialLink>
+            {socialLinks.map((link) => (
+              <SocialLink 
+                key={link.platform}
+                href={link.url}
+                target={link.url.startsWith('mailto:') ? undefined : "_blank"}
+                rel={link.url.startsWith('mailto:') ? undefined : "noopener noreferrer"}
+              >
+                {getIcon(link.icon)} {link.platform}
+              </SocialLink>
+            ))}
           </SocialLinks>
         </ContactInfo>
         <ContactForm
@@ -44,7 +60,7 @@ const Contact = () => {
           </FormGroup>
           <FormGroup>
             <Label>Email</Label>
-            <Input type="email" placeholder="amarbir1800@gmail.com" />
+            <Input type="email" placeholder={email} />
           </FormGroup>
           <FormGroup>
             <Label>Message</Label>

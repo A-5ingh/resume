@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useExperience } from '../../context/ResumeContext';
 
 const Experience = () => {
+  const experience = useExperience();
   return (
     <ExperienceSection id="experience">
       <SectionTitle
@@ -12,58 +14,21 @@ const Experience = () => {
         Career Journey
       </SectionTitle>
       <Timeline>
-        <TimelineItem>
-          <Period>2021 - Present</Period>
-          <Content>
-            <Role>Cloud & DevOps Architect</Role>
-            <Description>
-              Leading cloud migration initiatives and implementing DevOps best practices across multiple projects.
-              Specializing in infrastructure as code, CI/CD automation, and cloud-native solutions.
-            </Description>
-            <TechStack>
-              <Tech>Azure</Tech>
-              <Tech>GCP</Tech>
-              <Tech>GitHub Actions</Tech>
-              <Tech>GitLab CI</Tech>
-              <Tech>Infrastructure as Code</Tech>
-            </TechStack>
-          </Content>
-        </TimelineItem>
-
-        <TimelineItem>
-          <Period>2016 - 2021</Period>
-          <Content>
-            <Role>Full Stack Developer</Role>
-            <Description>
-              Developed and maintained full-stack applications using MERN and MEAN stacks.
-              Focused on building scalable and responsive web applications.
-            </Description>
-            <TechStack>
-              <Tech>React</Tech>
-              <Tech>Angular</Tech>
-              <Tech>Node.js</Tech>
-              <Tech>MongoDB</Tech>
-              <Tech>Express</Tech>
-            </TechStack>
-          </Content>
-        </TimelineItem>
-
-        <TimelineItem>
-          <Period>2009 - 2016</Period>
-          <Content>
-            <Role>QA Engineer / SDET</Role>
-            <Description>
-              Led automation testing initiatives and quality assurance processes.
-              Developed robust test frameworks and implemented CI/CD testing pipelines.
-            </Description>
-            <TechStack>
-              <Tech>Test Automation</Tech>
-              <Tech>CI/CD</Tech>
-              <Tech>Test Frameworks</Tech>
-              <Tech>Quality Assurance</Tech>
-            </TechStack>
-          </Content>
-        </TimelineItem>
+        {experience.map((exp, index) => (
+          <TimelineItem key={`${exp.role}-${exp.period}`}>
+            <Period>{exp.period}</Period>
+            <Content>
+              <Role>{exp.role}</Role>
+              {exp.company && <Company>{exp.company}</Company>}
+              <Description>{exp.description}</Description>
+              <TechStack>
+                {exp.technologies.map((tech) => (
+                  <Tech key={tech}>{tech}</Tech>
+                ))}
+              </TechStack>
+            </Content>
+          </TimelineItem>
+        ))}
       </Timeline>
     </ExperienceSection>
   );
@@ -193,6 +158,13 @@ const Tech = styled.span`
   border-radius: 15px;
   font-size: 0.875rem;
   border: 1px solid ${({ theme }) => theme.border};
+`;
+
+const Company = styled.div`
+  color: ${({ theme }) => theme.textSecondary};
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-style: italic;
 `;
 
 export default Experience;
