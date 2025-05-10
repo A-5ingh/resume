@@ -127,15 +127,37 @@ resume/
 
 ## Deployment
 
-Automatically deploys to GitHub Pages via GitHub Actions. The workflow:
-1. Installs dependencies cleanly
-2. Builds the project
-3. Deploys to gh-pages branch
+This project uses GitHub Actions to automatically deploy to GitHub Pages. Here's how to set it up:
 
-For manual deployment:
+1. **Repository Settings**:
+   - Go to repository Settings > Pages
+   - Under "Build and deployment", select "GitHub Actions" as the source
+   - Ensure GitHub Pages is enabled for the repository
+
+2. **Permissions Setup**:
+   - Go to Settings > Actions > General
+   - Under "Workflow permissions":
+     - Enable "Read and write permissions"
+     - Check "Allow GitHub Actions to create and approve pull requests"
+
+3. **Deployment Process**:
+   The workflow automatically:
+   - Installs dependencies cleanly
+   - Builds the project with correct base URL
+   - Deploys to GitHub Pages
+   - Provides deployment URL in the workflow summary
+
+4. **Troubleshooting Deployment**:
+   If deployment fails:
+   - Verify repository settings as described above
+   - Check Actions tab for detailed error logs
+   - Ensure your repository has GitHub Pages feature enabled
+   - Verify branch permissions allow workflow deployment
+
+For manual testing before deployment:
 ```bash
 npm run build
-npm run preview # Test the build
+npm run preview # Test the build locally
 ```
 
 ## Troubleshooting
