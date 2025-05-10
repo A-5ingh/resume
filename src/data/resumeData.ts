@@ -8,7 +8,7 @@ export const resumeData: ResumeData = {
     role: "Senior Technologist @ Infosys Limited | Cloud & DevOps Architect 🚀 | Full Stack Developer 💻",
     summary: "14+ years of expertise in software development, DevOps, and open source contributions. Passionate about developer tools, automation, and cloud-native solutions. Active contributor to projects like JHipster and Kyverno, with strong experience in designing scalable CI/CD pipelines and infrastructure as code. Skilled in multiple languages including JavaScript/TypeScript, C#, Python, and Go.",
     email: "amarbir1800@gmail.com",
-    phone: "+1 (437)-982 5618"
+    phone: "+1 (xxx)-xxx xxxx"
   },
   experience: [
     {

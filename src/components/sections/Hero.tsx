@@ -154,8 +154,8 @@ const ProfileContainer = styled.div`
 `;
 
 const ProfileImage = styled.div`
-  width: 180px;
-  height: 180px;
+  width: 380px;
+  height: 380px;
   border-radius: 50%;
   background: ${({ theme }) => theme.backgroundSecondary};
   border: 4px solid ${({ theme }) => theme.primary};

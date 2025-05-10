@@ -21,12 +21,11 @@ const Contact = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <InfoText>
-            I'm currently open to new opportunities and would love to hear from you.
-            Whether you have a question or just want to say hi, feel free to reach out!
+            I'm not actively looking for new opportunities at the moment, but I'm always happy to connect and help if you need assistance or have any questions. Feel free to reach out!
           </InfoText>
           <SocialLinks>
             {socialLinks.map((link, index) => (
-              <SocialLink 
+              <SocialLink
                 key={link.platform}
                 href={link.url}
                 target={link.url.startsWith('mailto:') ? undefined : "_blank"}

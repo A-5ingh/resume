@@ -37,6 +37,9 @@ const Header = ({ toggleTheme, isDarkMode }: HeaderProps) => {
           <NavItem>
             <NavLink href="#contact">Contact</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink href="https://github.com/A-5ingh/resume" target="_blank">⭐️ on GitHub</NavLink>
+          </NavItem>
         </NavList>
         <ThemeToggle onClick={toggleTheme}>
           {isDarkMode ? <BsSun /> : <BsMoon />}
