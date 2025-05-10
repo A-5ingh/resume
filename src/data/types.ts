@@ -1,8 +1,11 @@
+import type { IconType } from 'react-icons';
+
 export interface PersonalInfo {
   name: string;
   role: string;
   summary: string;
   email: string;
+  phone: string;
   location?: string;
   profileImage?: string;
 }
@@ -13,6 +16,7 @@ export interface Experience {
   period: string;
   description: string;
   technologies: string[];
+  icon?: IconType;
 }
 
 export interface Project {
@@ -26,7 +30,7 @@ export interface Project {
 export interface Social {
   platform: string;
   url: string;
-  icon: string;
+  icon: IconType;
 }
 
 export interface Skill {

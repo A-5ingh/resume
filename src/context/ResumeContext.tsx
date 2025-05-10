@@ -22,7 +22,7 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <ResumeContext.Provider value={value}>
+    <ResumeContext.Provider value={value} key={Math.random()}>
       {children}
     </ResumeContext.Provider>
   );

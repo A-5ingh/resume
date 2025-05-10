@@ -1,136 +1,201 @@
 import type { ResumeData } from './types';
-import { BsGithub, BsLinkedin, BsEnvelope, BsMedium } from 'react-icons/bs';
+import { BsGithub, BsLinkedin, BsEnvelope, BsMedium, BsStackOverflow } from 'react-icons/bs';
+import { FaCloud, FaCode, FaSearch, FaRobot, FaGraduationCap } from 'react-icons/fa';
 
 export const resumeData: ResumeData = {
   personal: {
     name: "Amarbir Singh",
-    role: "DevOps Architect & Full Stack Developer",
-    summary: "With 14 years of experience in software development, cloud architecture, and DevOps, I specialize in building scalable infrastructure and delivering robust solutions. Certified in Azure and GCP, with expertise in MERN/MEAN stack development.",
+    role: "Senior Technologist | Cloud & DevOps Architect 🚀 | Full Stack Developer 💻",
+    summary: "14+ years of expertise in software development, DevOps, and open source contributions. Passionate about developer tools, automation, and cloud-native solutions. Active contributor to projects like JHipster and Kyverno, with strong experience in designing scalable CI/CD pipelines and infrastructure as code. Skilled in multiple languages including JavaScript/TypeScript, C#, Python, and Go.",
     email: "amarbir1800@gmail.com",
+    phone: "+1 (437)-982 5618"
   },
   experience: [
     {
-      role: "Cloud & DevOps Architect",
-      period: "2021 - Present",
-      description: "Leading cloud migration initiatives and implementing DevOps best practices across multiple projects. Specializing in infrastructure as code, CI/CD automation, and cloud-native solutions.",
-      technologies: ["Azure", "GCP", "GitHub Actions", "GitLab CI", "Infrastructure as Code"],
+      role: "Senior Technologist 👨‍💻",
+      company: "Infosys Limited, Canada",
+      period: "2022 - Present",
+      icon: FaCloud,
+      description: "Leading cloud-native transformation and DevOps initiatives for a major education system. Implementing GitOps practices, automated CI/CD pipelines, and infrastructure as code. Mentoring teams in modern development practices and fostering a culture of automation and continuous improvement.",
+      technologies: [
+        "GitHub Actions 🔄",
+        "GitOps & IaC 🏗️",
+        "Kubernetes & Docker 🐳",
+        "Cloud Native 🚀",
+        "DevSecOps 🔒"
+      ],
     },
     {
-      role: "Full Stack Developer",
-      period: "2016 - 2021",
-      description: "Developed and maintained full-stack applications using MERN and MEAN stacks. Focused on building scalable and responsive web applications.",
-      technologies: ["React", "Angular", "Node.js", "MongoDB", "Express"],
+      role: "Specialist Programmer 👨‍💻",
+      company: "Infosys Limited",
+      period: "2020 - 2022",
+      icon: FaCode,
+      description: "Led development of iLEAD platform with multi-cloud deployment capabilities. Implemented comprehensive CI/CD pipelines, containerization strategies, and infrastructure automation. Developed full-stack applications using modern frameworks.",
+      technologies: [
+        "Kubernetes & Docker 🐳",
+        "Jenkins & CI/CD 🔄",
+        "React/Vue.js ⚛️",
+        "Node.js/NestJS 💚",
+        "OpenShift/Rancher 🎯"
+      ],
     },
     {
-      role: "QA Engineer / SDET",
-      period: "2009 - 2016",
-      description: "Led automation testing initiatives and quality assurance processes. Developed robust test frameworks and implemented CI/CD testing pipelines.",
-      technologies: ["Test Automation", "CI/CD", "Test Frameworks", "Quality Assurance"],
+      role: "Specialist Programmer/SDET 👨‍💻",
+      company: "Infosys Limited",
+      period: "2019 - 2020",
+      icon: FaRobot,
+      description: "Developed and implemented automated testing solutions for equity trading platforms and complex financial systems. Pioneered RPA solutions using Blue Prism for business process automation.",
+      technologies: [
+        "Blue Prism RPA 🤖",
+        "SQL Server 💾",
+        "Testing Frameworks 🎯",
+        "Financial Systems 💰"
+      ],
     },
+    {
+      role: "Various (System Engineer, Test Analyst, SDET) 🔍",
+      company: "Infosys Limited",
+      period: "2011 - 2019",
+      icon: FaSearch,
+      description: "Led core automation initiatives and developed comprehensive testing frameworks. Created innovative solutions for automated report comparison and enhanced test coverage across multiple applications.",
+      technologies: [
+        "Test Automation 🔄",
+        "VBA Development 📊",
+        "SQL & Databases 💾",
+        "Framework Design 🛠️"
+      ],
+    }
   ],
   projects: [
     {
-      title: "JHipster Contribution",
+      title: "Infrastructure as Code Resources 🏗️",
+      category: "Industry",
+      description: "Created and published comprehensive technical articles on Infrastructure as Code. Developed reusable enterprise modules for cloud resource provisioning, with a focus on developer experience and automation. Implemented GitOps practices for infrastructure management.",
+      tech: ["Azure", "Bicep", "ARM Templates", "PowerShell", "DevOps"],
+      link: "https://medium.com/@amarbir1800"
+    },
+    {
+      title: "JHipster Framework Enhancement ⚡",
       category: "Open Source",
-      description: "Contributing to JHipster, an open-source development platform for quickly generating, developing, and deploying modern web applications and microservices.",
-      tech: ["Java", "Spring Boot", "Angular", "React", "Microservices"],
-      link: "https://github.com/jhipster/generator-jhipster",
+      description: "Active contributor to JHipster framework, focusing on Vue.js and Node.js generators. Identified and fixed critical security vulnerabilities in the Node.js generator, improving platform security.",
+      tech: ["Vue.js", "Node.js", "TypeScript", "Security", "Microservices"],
+      link: "https://github.com/jhipster/generator-jhipster"
     },
     {
-      title: "Kyverno Contribution",
+      title: "Kyverno Security & Policy Engine 🛡️",
       category: "Open Source",
-      description: "Contributing to Kyverno, a policy engine designed for Kubernetes. Working on policy management and security implementations.",
-      tech: ["Kubernetes", "Go", "Policy as Code", "Security"],
-      link: "https://github.com/kyverno/kyverno",
+      description: "Contributing to Kubernetes policy management, implementing security policies and enhancing documentation. Focus on policy as code and security implementations.",
+      tech: ["Kubernetes", "Go", "Policy as Code", "Security", "DevOps"],
+      link: "https://github.com/kyverno/kyverno"
     },
     {
-      title: "Financial Domain Projects",
+      title: "Cloud Migration & Modernization 📚",
       category: "Industry",
-      description: "Implemented cloud-native solutions and DevOps practices in the financial sector, focusing on secure and scalable infrastructure.",
-      tech: ["Cloud Architecture", "DevOps", "Security", "Microservices"],
-    },
-    {
-      title: "Insurance Platform",
-      category: "Industry",
-      description: "Developed and maintained insurance platforms using modern tech stack, implementing CI/CD pipelines and automated testing.",
-      tech: ["MEAN Stack", "Azure", "CI/CD", "Automated Testing"],
-    },
-    {
-      title: "Education Tech Solutions",
-      category: "Industry",
-      description: "Built scalable educational platforms, focusing on performance optimization and user experience.",
-      tech: ["MERN Stack", "GCP", "Performance Optimization"],
-    },
+      description: "Architected and led the migration of large-scale education system to Azure cloud. Implemented modern DevOps practices, automated deployments, and enhanced system reliability.",
+      tech: ["Azure", "DevOps", "CI/CD", "Infrastructure as Code", "Automation"],
+    }
   ],
   skills: [
     {
-      category: "Cloud & DevOps",
+      category: "DevOps & Cloud ☁️",
       items: [
-        "Azure",
-        "GCP",
-        "Infrastructure as Code",
-        "CI/CD",
-        "Docker",
-        "Kubernetes",
-        "GitLab",
-        "GitHub Actions",
+        "GitHub Actions & CI/CD 🔄",
+        "GitOps & GitHub Flow 🌟",
+        "Containers & K8s 🐳",
+        "Infrastructure as Code 🏗️",
+        "Cloud Platforms ⚡",
+        "DevSecOps 🔒",
+        "Monitoring & SRE 📊",
+        "Automation & CLI 🛠️"
       ],
     },
     {
-      category: "Full Stack Development",
+      category: "Development 💻",
       items: [
-        "React",
-        "Angular",
-        "Node.js",
-        "TypeScript",
-        "MongoDB",
-        "Express",
-        "REST APIs",
-        "Microservices",
+        "JavaScript/TypeScript 💪",
+        "Go & Python 🐍",
+        "Node.js & React ⚛️",
+        "API Design 🔌",
+        "System Design 📐",
+        "CLIs & Developer Tools 🛠️",
+        "Testing & TDD 🎯",
+        "Open Source 🌟"
       ],
     },
     {
-      category: "Testing & QA",
+      category: "Tools & Platforms 🛠️",
       items: [
-        "Test Automation",
-        "Test Frameworks",
-        "Quality Assurance",
-        "Performance Testing",
+        "Git & GitHub 🔧",
+        "VS Code/VS 📝",
+        "Jenkins & Azure DevOps 🔄",
+        "Jira & Confluence 📚",
+        "OpenShift & Rancher ⚙️",
+        "PowerShell & Bash 💻"
       ],
-    },
+    }
   ],
   certifications: [
     {
-      name: "Azure Cloud Certification",
+      name: "Microsoft Azure Administrator Associate (AZ-104) ⭐",
       issuer: "Microsoft",
-      date: "2023",
+      date: "Nov 2024"
     },
     {
-      name: "GCP Cloud Certification",
-      issuer: "Google",
-      date: "2023",
+      name: "Microsoft Azure AI Engineer Associate (A1-102) ⭐",
+      issuer: "Microsoft",
+      date: "Sep 2024"
     },
+    {
+      name: "Microsoft DevOps Solutions (AZ-400) ⭐",
+      issuer: "Microsoft",
+      date: "Jun 2023"
+    },
+    {
+      name: "Associate Cloud Engineer 🌩️",
+      issuer: "Google",
+      date: "Mar 2023"
+    },
+    {
+      name: "Azure Fundamentals (AZ-900) ☁️",
+      issuer: "Microsoft",
+      date: "Jun 2023"
+    },
+    {
+      name: "AWS Cloud Practitioner ⚡",
+      issuer: "Amazon",
+      date: "Mar 2023"
+    },
+    {
+      name: "Machine Learning Foundations 🤖",
+      issuer: "eCornell",
+      date: "Jul 2020"
+    }
   ],
   social: [
     {
       platform: "GitHub",
       url: "https://github.com/a-5ingh",
-      icon: "BsGithub",
+      icon: BsGithub
     },
     {
       platform: "LinkedIn",
-      url: "#",
-      icon: "BsLinkedin",
+      url: "https://www.linkedin.com/in/amarbir-singh",
+      icon: BsLinkedin
+    },
+    {
+      platform: "Stack Overflow",
+      url: "https://stackoverflow.com/users/11640763/stud3nt",
+      icon: BsStackOverflow
+    },
+    {
+      platform: "Medium",
+      url: "https://medium.com/@amarbir1800",
+      icon: BsMedium
     },
     {
       platform: "Email",
       url: "mailto:amarbir1800@gmail.com",
-      icon: "BsEnvelope",
-    },
-    {
-      platform: "Medium",
-      url: "#",
-      icon: "BsMedium",
-    },
+      icon: BsEnvelope
+    }
   ],
 };

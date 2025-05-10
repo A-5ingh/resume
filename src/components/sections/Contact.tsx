@@ -1,26 +1,10 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { BsGithub, BsLinkedin, BsEnvelope, BsMedium } from 'react-icons/bs';
 import { usePersonalInfo, useSocial } from '../../context/ResumeContext';
 
 const Contact = () => {
-  const { name, email } = usePersonalInfo();
   const socialLinks = useSocial();
 
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'BsGithub':
-        return <BsGithub />;
-      case 'BsLinkedin':
-        return <BsLinkedin />;
-      case 'BsEnvelope':
-        return <BsEnvelope />;
-      case 'BsMedium':
-        return <BsMedium />;
-      default:
-        return null;
-    }
-  };
   return (
     <ContactSection id="contact">
       <SectionTitle
@@ -31,20 +15,29 @@ const Contact = () => {
         Get In Touch
       </SectionTitle>
       <ContentWrapper>
-        <ContactInfo>
+        <ContactInfo
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <InfoText>
             I'm currently open to new opportunities and would love to hear from you.
             Whether you have a question or just want to say hi, feel free to reach out!
           </InfoText>
           <SocialLinks>
-            {socialLinks.map((link) => (
+            {socialLinks.map((link, index) => (
               <SocialLink 
                 key={link.platform}
                 href={link.url}
                 target={link.url.startsWith('mailto:') ? undefined : "_blank"}
                 rel={link.url.startsWith('mailto:') ? undefined : "noopener noreferrer"}
+                as={motion.a}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
               >
-                {getIcon(link.icon)} {link.platform}
+                <link.icon size={20} />
+                {link.platform}
               </SocialLink>
             ))}
           </SocialLinks>
@@ -60,7 +53,7 @@ const Contact = () => {
           </FormGroup>
           <FormGroup>
             <Label>Email</Label>
-            <Input type="email" placeholder={email} />
+            <Input type="email" placeholder="Your email" />
           </FormGroup>
           <FormGroup>
             <Label>Message</Label>
@@ -75,7 +68,24 @@ const Contact = () => {
 
 const ContactSection = styled.section`
   padding: 5rem 0;
-  background-color: ${({ theme }) => theme.backgroundSecondary};
+  background-color: ${({ theme }) => theme.background};
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      ${({ theme }) => theme.primary}33,
+      transparent
+    );
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -86,21 +96,28 @@ const SectionTitle = styled(motion.h2)`
 `;
 
 const ContentWrapper = styled.div`
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: center;
+  align-items: start;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding: 0 1rem;
   }
 `;
 
-const ContactInfo = styled.div``;
+const ContactInfo = styled(motion.div)`
+  background: ${({ theme }) => theme.backgroundSecondary};
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};
+  border: 1px solid ${({ theme }) => theme.border};
+`;
 
 const InfoText = styled.p`
   color: ${({ theme }) => theme.textSecondary};
@@ -115,21 +132,24 @@ const SocialLinks = styled.div`
   gap: 1rem;
 `;
 
-const SocialLink = styled.a`
+const SocialLink = styled(motion.a)`
   color: ${({ theme }) => theme.text};
   text-decoration: none;
   font-size: 1.1rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: color 0.2s ease;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 
-  &:hover {
+  svg {
     color: ${({ theme }) => theme.primary};
   }
 
-  svg {
-    font-size: 1.3rem;
+  &:hover {
+    background: ${({ theme }) => `${theme.primary}11`};
+    transform: translateX(5px);
   }
 `;
 
@@ -137,6 +157,11 @@ const ContactForm = styled(motion.form)`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  background: ${({ theme }) => theme.backgroundSecondary};
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};
+  border: 1px solid ${({ theme }) => theme.border};
 `;
 
 const FormGroup = styled.div`
@@ -158,11 +183,12 @@ const Input = styled.input`
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
   font-size: 1rem;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.primary};
+    box-shadow: 0 0 0 2px ${({ theme }) => `${theme.primary}33`};
   }
 `;
 
@@ -175,11 +201,12 @@ const TextArea = styled.textarea`
   font-size: 1rem;
   resize: vertical;
   min-height: 120px;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.primary};
+    box-shadow: 0 0 0 2px ${({ theme }) => `${theme.primary}33`};
   }
 `;
 
@@ -192,11 +219,22 @@ const SubmitButton = styled.button`
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(46, 160, 67, 0.4);
+    box-shadow: 
+      0 8px 25px ${({ theme }) => `${theme.primary}66`},
+      0 0 0 2px ${({ theme }) => theme.primary};
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 
+      0 4px 12px ${({ theme }) => `${theme.primary}66`},
+      0 0 0 2px ${({ theme }) => theme.primary};
   }
 `;
 

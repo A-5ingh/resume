@@ -26,7 +26,13 @@ const Header = ({ toggleTheme, isDarkMode }: HeaderProps) => {
             <NavLink href="#experience">Experience</NavLink>
           </NavItem>
           <NavItem>
+            <NavLink href="#skills">Skills</NavLink>
+          </NavItem>
+          <NavItem>
             <NavLink href="#projects">Projects</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="#certifications">Certifications</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="#contact">Contact</NavLink>
