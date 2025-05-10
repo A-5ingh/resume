@@ -189,7 +189,7 @@ export const resumeData: ResumeData = {
     },
     {
       platform: "Medium",
-      url: "https://medium.com/@amarbir1800",
+      url: "https://medium.com/@a.student",
       icon: BsMedium
     },
     {
