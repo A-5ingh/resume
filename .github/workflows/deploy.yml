@@ -42,15 +42,8 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifact
-          path: dist
-          if-no-files-found: error
-
       - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
