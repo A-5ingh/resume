@@ -41,7 +41,7 @@ const Footer = () => {
           </ExportButton>
         </ExportOptions>
         <FooterText>
-          Built with React + TypeScript • Hosted on GitHub Pages
+          Built with React + TypeScript • Hosted on GitHub Pages • ❤️ with Vibe Coding
         </FooterText>
       </FooterContent>
     </FooterWrapper>

@@ -1,25 +1,55 @@
 # Dynamic Portfolio Template
 
-A modern, customizable portfolio template built with React, TypeScript, and styled-components. Features a dark/light theme toggle, smooth animations, sections for experience, projects, contact information, and export functionality.
+A modern, customizable portfolio template built with React, TypeScript, and styled-components. Features a dark/light theme toggle, smooth animations, comprehensive sections for showcasing your professional experience, and export functionality.
 
 ## Features
 
 - 🎨 Dark/Light theme support
 - 📱 Fully responsive design
 - ✨ Smooth animations with Framer Motion
-- 🎯 Sections for experience, projects, and contact
+- 🎯 Comprehensive sections:
+  - About/Hero
+  - Experience
+  - Skills showcase
+  - Project portfolio
+  - Certifications
+  - Contact form
 - 🚀 Export functionality (PDF, DOC, PPT)
 - 📝 Data-driven content management
 - 🔧 Built with TypeScript
-- 🎭 Programmer-friendly fonts
+- 🎭 Modern design with fluid animations
 
 ## Technologies Used
 
-- React + TypeScript
-- Vite for fast development
+- React 18 + TypeScript
+- Vite for blazing-fast development
 - styled-components for styling
 - Framer Motion for animations
+- React Icons
 - GitHub Actions for CI/CD
+
+## Getting Started
+
+1. Clone the repository:
+```bash
+git clone https://github.com/a-5ingh/resume.git
+cd resume
+```
+
+2. Clean install dependencies:
+```bash
+npm clean-install
+```
+
+3. Start development server:
+```bash
+npm run dev
+```
+
+4. View in browser:
+```
+http://localhost:5173
+```
 
 ## Customization
 
@@ -32,87 +62,46 @@ A modern, customizable portfolio template built with React, TypeScript, and styl
        name: "Your Name",
        role: "Your Role",
        summary: "Your professional summary...",
-       email: "your.email@example.com"
+       email: "your.email@example.com",
+       phone: "Your Phone" // Optional
      },
      experience: [
        {
-         role: "Your Role",
+         role: "Position Title",
+         company: "Company Name",
          period: "2020 - Present",
          description: "Your responsibilities...",
-         technologies: ["Tech1", "Tech2"]
+         technologies: ["Tech1", "Tech2"],
+         icon: YourIcon // Optional icon from react-icons
        }
      ],
-     // ... other sections
+     skills: [
+       {
+         category: "Category Name",
+         items: ["Skill 1 ⭐", "Skill 2 🚀", "Skill 3 💻"]
+       }
+     ],
+     certifications: [
+       {
+         name: "Certification Name",
+         issuer: "Issuer",
+         date: "2023"
+       }
+     ]
    };
 
-   // themeConfig.ts
+   // themeConfig.ts - Customize colors
    export const themeConfig: ThemeConfig = {
      light: {
        primary: '#YOUR_COLOR',
-       // ... other color settings
+       // ... other colors
      },
      dark: {
        primary: '#YOUR_COLOR',
-       // ... other color settings
+       // ... other colors
      }
    };
    ```
-3. Optional: Modify components in `src/components/` for layout changes
-4. Update fonts in `index.html` if desired
-
-## Export Options
-
-- **PDF Export**: Clean, printable format
-- **DOC Export**: Editable text format
-- **PPT Export**: Presentation format
-
-## Local Development
-
-1. Clone the repository:
-```bash
-git clone https://github.com/a-5ingh/resume.git
-cd resume
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start development server:
-```bash
-npm run dev
-```
-
-4. Open your browser and visit:
-```
-http://localhost:5173/resume/
-```
-
-## Deployment
-
-This portfolio is automatically deployed to GitHub Pages using GitHub Actions. The workflow is triggered on every push to the main branch.
-
-To deploy manually:
-
-1. Build the project:
-```bash
-npm run build
-```
-
-2. Preview the build:
-```bash
-npm run preview
-```
-
-3. Deploy to GitHub Pages:
-```bash
-git add .
-git commit -m "Your commit message"
-git push origin main
-```
-
-The GitHub Action will automatically build and deploy the site to the gh-pages branch.
 
 ## Project Structure
 
@@ -120,36 +109,51 @@ The GitHub Action will automatically build and deploy the site to the gh-pages b
 resume/
 ├── src/
 │   ├── components/
-│   │   ├── layout/          # Layout components (Header, Footer, Layout)
-│   │   ├── sections/        # Main content sections (Hero, Experience, Projects, Contact)
-│   │   └── shared/         # Reusable components
-│   ├── data/              # Data and configuration files
-│   │   ├── types.ts       # TypeScript interfaces
-│   │   ├── resumeData.ts  # Your personal information
-│   │   └── themeConfig.ts # Theme and styling configuration
-│   ├── styles/
-│   │   ├── theme.ts       # Theme types
-│   │   ├── styled.d.ts    # styled-components type declarations
-│   │   └── globalStyles.ts # Global styles
+│   │   ├── animations/    # Animation components
+│   │   ├── layout/        # Layout components
+│   │   └── sections/      # Main content sections
+│   │       ├── Hero/      # Introduction
+│   │       ├── Experience/# Work history
+│   │       ├── Skills/    # Skills showcase
+│   │       ├── Projects/  # Portfolio
+│   │       ├── Certifications/
+│   │       └── Contact/   # Contact form
 │   ├── context/          # React Context providers
-│   ├── utils/            # Utility functions (export helpers)
-│   └── assets/           # Static assets
-├── public/              # Public assets
-├── .github/
-│   └── workflows/       # GitHub Actions deployment config
-└── package.json
+│   ├── data/            # Content and configuration
+│   ├── styles/          # Theme and global styles
+│   └── utils/           # Helper functions
+└── public/             # Static assets
 ```
 
-### Key Files
-- `src/data/resumeData.ts`: Update this file with your information
-- `src/data/themeConfig.ts`: Customize colors and styling
-- `src/components/sections/`: Modify section layouts
-- `.github/workflows/deploy.yml`: GitHub Pages deployment config
+## Deployment
+
+Automatically deploys to GitHub Pages via GitHub Actions. The workflow:
+1. Installs dependencies cleanly
+2. Builds the project
+3. Deploys to gh-pages branch
+
+For manual deployment:
+```bash
+npm run build
+npm run preview # Test the build
+```
+
+## Troubleshooting
+
+If you encounter dependency issues:
+```bash
+npm run clean    # Removes node_modules, package-lock.json, and dist
+npm run reinstall # Clean install of dependencies
+```
+
+Requirements:
+- Node.js >=16.0.0
+- npm >=8.0.0
 
 ## Contact
 
-For any inquiries, please reach out to [amarbir1800@gmail.com](mailto:amarbir1800@gmail.com).
+For questions or suggestions, reach out to [amarbir1800@gmail.com](mailto:amarbir1800@gmail.com)
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source under the [MIT License](LICENSE).
