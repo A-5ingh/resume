@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { usePersonalInfo, useSocial } from '../../context/ResumeContext';
+import { useSocial } from '../../context/ResumeContext';
 
 const Contact = () => {
   const socialLinks = useSocial();

@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import type { DefaultTheme } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePersonalInfo, useSkills } from '../../context/ResumeContext';
+import { usePersonalInfo } from '../../context/ResumeContext';
 import RippleEffect from '../animations/RippleEffect';
 
 const Hero = () => {
   const { name, role, summary } = usePersonalInfo();
-  const skills = useSkills();
+  // const skills = useSkills();
 
   return (
     <HeroSection id="about">
@@ -47,7 +47,7 @@ const Hero = () => {
           <Title>{role}</Title>
           <Description>{summary}</Description>
           <AnimatePresence>
-            <SkillsPreview>
+            {/* <SkillsPreview>
               {skills.map((category, categoryIndex) => (
                 <motion.div
                   key={category.category}
@@ -76,7 +76,7 @@ const Hero = () => {
                   </SkillCategory>
                 </motion.div>
               ))}
-            </SkillsPreview>
+            </SkillsPreview> */}
             <CTAContainer
               as={motion.div}
               initial={{ opacity: 0, y: 20 }}
@@ -346,74 +346,74 @@ const SecondaryButton = styled(Button)`
   }
 `;
 
-const SkillsPreview = styled.div`
-  margin: 2rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`;
+// const SkillsPreview = styled.div`
+//   margin: 2rem 0;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1.5rem;
+// `;
 
-const SkillCategory = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
+// const SkillCategory = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.5rem;
+// `;
 
-const SkillCategoryName = styled.h3`
-  color: ${({ theme }) => theme.text};
-  font-size: 1.1rem;
-  font-weight: 600;
-`;
+// const SkillCategoryName = styled.h3`
+//   color: ${({ theme }) => theme.text};
+//   font-size: 1.1rem;
+//   font-weight: 600;
+// `;
 
-const SkillList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-`;
+// const SkillList = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 0.5rem;
+//   justify-content: center;
+// `;
 
-const SkillTag = styled.span`
-  background-color: ${({ theme }) => `${theme.backgroundSecondary}99`};
-  color: ${({ theme }) => theme.primary};
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border: 1px solid ${({ theme }) => theme.border};
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  cursor: default;
+// const SkillTag = styled.span`
+//   background-color: ${({ theme }) => `${theme.backgroundSecondary}99`};
+//   color: ${({ theme }) => theme.primary};
+//   padding: 0.5rem 1rem;
+//   border-radius: 20px;
+//   font-size: 0.875rem;
+//   font-weight: 500;
+//   border: 1px solid ${({ theme }) => theme.border};
+//   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+//   position: relative;
+//   cursor: default;
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 20px;
-    padding: 1px;
-    background: linear-gradient(
-      45deg,
-      ${({ theme }) => theme.primary},
-      ${({ theme }) => `${theme.primary}33`}
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+//   &::before {
+//     content: '';
+//     position: absolute;
+//     inset: -1px;
+//     border-radius: 20px;
+//     padding: 1px;
+//     background: linear-gradient(
+//       45deg,
+//       ${({ theme }) => theme.primary},
+//       ${({ theme }) => `${theme.primary}33`}
+//     );
+//     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+//     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+//     -webkit-mask-composite: xor;
+//     mask-composite: exclude;
+//     opacity: 0;
+//     transition: opacity 0.3s ease;
+//   }
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-      0 4px 12px ${({ theme }) => theme.shadow},
-      0 0 0 1px ${({ theme }) => theme.primary};
-    background-color: ${({ theme }) => theme.backgroundSecondary};
+//   &:hover {
+//     transform: translateY(-2px);
+//     box-shadow: 
+//       0 4px 12px ${({ theme }) => theme.shadow},
+//       0 0 0 1px ${({ theme }) => theme.primary};
+//     background-color: ${({ theme }) => theme.backgroundSecondary};
     
-    &::before {
-      opacity: 1;
-    }
-  }
-`;
+//     &::before {
+//       opacity: 1;
+//     }
+//   }
+// `;
 
 export default Hero;

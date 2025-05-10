@@ -19,7 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <GlobalStyles />
+      <GlobalStyles theme={isDarkMode ? darkTheme : lightTheme} />
       <Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
       <Main>{children}</Main>
       <Footer />
