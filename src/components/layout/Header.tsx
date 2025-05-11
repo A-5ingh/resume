@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { BsSun, BsMoon, BsList, BsX, BsPerson, BsBriefcase, BsTools, BsFolder, BsAward, BsEnvelope, BsGithub } from 'react-icons/bs';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 interface HeaderProps {
