@@ -3,6 +3,7 @@ import type { DefaultTheme } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePersonalInfo } from '../../context/ResumeContext';
 import RippleEffect from '../animations/RippleEffect';
+import { TypeAnimation } from 'react-type-animation';
 
 const Hero = () => {
   const { name, role, summary } = usePersonalInfo();
@@ -43,9 +44,28 @@ const Hero = () => {
           transition={{ duration: 0.5 }}
         >
           <Greeting>Hello, I'm</Greeting>
-          <Name>{name}</Name>
-          <Title>{role}</Title>
-          <Description>{summary}</Description>
+          <Name>
+            <TypeAnimation
+              sequence={[500, name]}
+              speed={50}
+              cursor={false}
+            />
+          </Name>
+          <Title>
+            <TypeAnimation
+              sequence={[1000, role]}
+              speed={50}
+              cursor={true}
+            />
+          </Title>
+          <Description
+            as={motion.p}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.5, duration: 1 }}
+          >
+            {summary}
+          </Description>
           <AnimatePresence>
             {/* <SkillsPreview>
               {skills.map((category, categoryIndex) => (

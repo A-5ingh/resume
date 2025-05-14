@@ -16,12 +16,15 @@ const Header = ({ toggleTheme, isDarkMode }: HeaderProps) => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
             setActiveSection(entry.target.id);
           }
         });
       },
-      { threshold: 0.5 }
+      { 
+        threshold: [0.2, 0.5, 0.8],
+        rootMargin: '-64px 0px 0px 0px' // Accounts for fixed header
+      }
     );
 
     const sections = document.querySelectorAll('section[id]');
@@ -63,7 +66,9 @@ const Header = ({ toggleTheme, isDarkMode }: HeaderProps) => {
       </NavControls>
       <Sidebar
         initial={false}
-        animate={{ width: isOpen ? '250px' : '60px' }}
+        animate={{
+          x: isOpen ? 0 : '100%'
+        }}
         transition={{ type: 'tween', duration: 0.3 }}
       >
         <NavList>
@@ -124,6 +129,10 @@ const HeaderWrapper = styled.header`
   z-index: 1000;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
 `;
 
 const NavControls = styled.div`
@@ -160,6 +169,14 @@ const Sidebar = styled(motion.nav)`
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
+  z-index: 999;
+  width: ${props => props.style?.transform === 'translateX(100%)' ? '60px' : '250px'};
+
+  @media (max-width: 768px) {
+    width: 100%;
+    border-left: none;
+    padding: 1.5rem;
+  }
 `;
 
 const Logo = styled(motion.div)`
@@ -210,6 +227,13 @@ const NavText = styled.span<{ isOpen: boolean }>`
   visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
   transition: all 0.2s ease;
   white-space: nowrap;
+
+  @media (max-width: 768px) {
+    opacity: 1;
+    visibility: visible;
+    font-size: 1.1rem;
+    margin-left: 1.25rem;
+  }
 `;
 
 const ThemeToggle = styled.button`
