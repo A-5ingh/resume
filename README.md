@@ -1,31 +1,38 @@
 # Dynamic Portfolio Template
 
-A modern, customizable portfolio template built with React, TypeScript, and styled-components. Features a dark/light theme toggle, smooth animations, comprehensive sections for showcasing your professional experience, and export functionality.
+A modern, customizable portfolio template built with React, TypeScript, and styled-components. Features a dark/light theme toggle, smooth animations, comprehensive sections for showcasing your professional experience, and multi-format export functionality.
 
 ## Features
 
-- 🎨 Dark/Light theme support
+- 🎨 Dark/Light theme support with customizable colors
 - 📱 Fully responsive design
 - ✨ Smooth animations with Framer Motion
 - 🎯 Comprehensive sections:
   - About/Hero
   - Experience
   - Skills showcase
-  - Project portfolio
+  - Projects portfolio
   - Certifications
   - Contact form
-- 🚀 Export functionality (PDF, DOC, PPT)
+- 🚀 Export functionality:
+  - PDF (A4 format)
+  - Word Document (DOC)
+  - PowerPoint Presentation (16:9)
 - 📝 Data-driven content management
-- 🔧 Built with TypeScript
 - 🎭 Modern design with fluid animations
+- 🔤 Custom typography with JetBrains Mono and Fira Code fonts
+- 🔗 Social media integration
+- ⚡ Type animations for dynamic text
 
 ## Technologies Used
 
 - React 18 + TypeScript
-- Vite for blazing-fast development
+- Vite 6 for blazing-fast development
 - styled-components for styling
 - Framer Motion for animations
 - React Icons
+- React Type Animation
+- pptxgenjs for PowerPoint export
 - GitHub Actions for CI/CD
 
 ## Getting Started
@@ -75,6 +82,15 @@ http://localhost:5173
          icon: YourIcon // Optional icon from react-icons
        }
      ],
+     projects: [
+       {
+         title: "Project Name",
+         category: "Category",
+         description: "Project description...",
+         tech: ["Tech1", "Tech2"],
+         link: "https://project-url.com" // Optional
+       }
+     ],
      skills: [
        {
          category: "Category Name",
@@ -87,19 +103,40 @@ http://localhost:5173
          issuer: "Issuer",
          date: "2023"
        }
+     ],
+     social: [
+       {
+         platform: "GitHub",
+         url: "https://github.com/username",
+         icon: BsGithub // Icon from react-icons
+       }
      ]
    };
 
-   // themeConfig.ts - Customize colors
+   // themeConfig.ts - Customize colors and settings
    export const themeConfig: ThemeConfig = {
      light: {
-       primary: '#YOUR_COLOR',
-       // ... other colors
+       primary: '#2EA043',
+       secondary: '#0D1117',
+       text: '#24292F',
+       // ... other color settings
      },
      dark: {
-       primary: '#YOUR_COLOR',
-       // ... other colors
-     }
+       primary: '#2EA043',
+       secondary: '#161B22',
+       text: '#C9D1D9',
+       // ... other color settings
+     },
+     defaultMode: 'dark' // Set default theme mode
+   };
+
+   // Font configuration
+   export const fontConfig = {
+     primary: "'JetBrains Mono', monospace",
+     secondary: "'Fira Code', monospace",
+     preloadUrls: [
+       // Font URLs for preloading
+     ]
    };
    ```
 
@@ -111,6 +148,7 @@ resume/
 │   ├── components/
 │   │   ├── animations/    # Animation components
 │   │   ├── layout/        # Layout components
+│   │   ├── shared/        # Shared/reusable components
 │   │   └── sections/      # Main content sections
 │   │       ├── Hero/      # Introduction
 │   │       ├── Experience/# Work history
@@ -120,9 +158,10 @@ resume/
 │   │       └── Contact/   # Contact form
 │   ├── context/          # React Context providers
 │   ├── data/            # Content and configuration
-│   ├── styles/          # Theme and global styles
-│   └── utils/           # Helper functions
-└── public/             # Static assets
+│   ├── styles/          # Theme, fonts, and global styles
+│   ├── utils/           # Helper functions for export and formatting
+│   └── assets/         # Static assets and images
+└── public/            # Static files and favicons
 ```
 
 ## Deployment
