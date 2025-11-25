@@ -1,6 +1,20 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useSkills } from '../../context/ResumeContext';
+import { GlassCard } from '../shared/GlassCard';
+import { GradientText } from '../shared/GradientText';
+import { Code2, Database, Layout, Terminal, Cpu, Globe } from 'lucide-react';
+
+const getIconForCategory = (category: string) => {
+  switch (category.toLowerCase()) {
+    case 'frontend': return <Layout size={24} />;
+    case 'backend': return <Database size={24} />;
+    case 'languages': return <Code2 size={24} />;
+    case 'tools': return <Terminal size={24} />;
+    case 'devops': return <Cpu size={24} />;
+    default: return <Globe size={24} />;
+  }
+};
 
 const Skills = () => {
   const skills = useSkills();
@@ -9,14 +23,16 @@ const Skills = () => {
     <SkillsSection id="skills">
       <SectionTitle
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        Skills & Technologies
+        <GradientText>Skills & Technologies</GradientText>
       </SectionTitle>
+
       <SkillsGrid>
         {skills.map((category, categoryIndex) => (
-          <SkillCategory
+          <SkillCard
             key={category.category}
             as={motion.div}
             initial={{ opacity: 0, y: 30 }}
@@ -27,7 +43,13 @@ const Skills = () => {
               delay: categoryIndex * 0.1,
             }}
           >
-            <CategoryTitle>{category.category}</CategoryTitle>
+            <CategoryHeader>
+              <IconWrapper>
+                {getIconForCategory(category.category)}
+              </IconWrapper>
+              <CategoryTitle>{category.category}</CategoryTitle>
+            </CategoryHeader>
+
             <SkillsList>
               {category.items.map((skill, skillIndex) => (
                 <SkillItem
@@ -42,7 +64,7 @@ const Skills = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
                     transition: { duration: 0.2 }
                   }}
@@ -51,7 +73,7 @@ const Skills = () => {
                 </SkillItem>
               ))}
             </SkillsList>
-          </SkillCategory>
+          </SkillCard>
         ))}
       </SkillsGrid>
     </SkillsSection>
@@ -59,112 +81,76 @@ const Skills = () => {
 };
 
 const SkillsSection = styled.section`
-  padding: 5rem 0;
+  padding: 6rem 2rem;
   background: ${({ theme }) => theme.background};
   position: relative;
   overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      ${({ theme }) => theme.primary}33,
-      transparent
-    );
-  }
 `;
 
 const SectionTitle = styled(motion.h2)`
   text-align: center;
-  font-size: 2.5rem;
-  color: ${({ theme }) => theme.text};
-  margin-bottom: 3rem;
+  font-size: 3rem;
+  margin-bottom: 4rem;
 `;
 
 const SkillsGrid = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-
-  @media (max-width: 768px) {
-    padding: 0 1rem;
-  }
 `;
 
-const SkillCategory = styled.div`
+const SkillCard = styled(GlassCard)`
+  height: 100%;
   background: ${({ theme }) => theme.backgroundSecondary};
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 4px 20px ${({ theme }) => theme.shadow};
-  border: 1px solid ${({ theme }) => theme.border};
-  transition: all 0.3s ease;
-  position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    padding: 1px;
-    background: linear-gradient(
-      45deg,
-      ${({ theme }) => theme.primary},
-      ${({ theme }) => `${theme.primary}33`}
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+`;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px ${({ theme }) => theme.shadow};
+const CategoryHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+`;
 
-    &::before {
-      opacity: 1;
-    }
-  }
+const IconWrapper = styled.div`
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: ${({ theme }) => theme.primary}20;
+  color: ${({ theme }) => theme.primary};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const CategoryTitle = styled.h3`
   font-size: 1.5rem;
-  color: ${({ theme }) => theme.primary};
-  margin-bottom: 1.5rem;
-  text-align: center;
+  color: ${({ theme }) => theme.text};
+  font-weight: 600;
 `;
 
 const SkillsList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
+  gap: 0.75rem;
 `;
 
 const SkillItem = styled.div`
-  background: ${({ theme }) => `${theme.primary}11`};
-  color: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.textSecondary};
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
-  border: 1px solid ${({ theme }) => `${theme.primary}33`};
-  transition: all 0.3s ease;
+  border: 1px solid ${({ theme }) => theme.border};
   cursor: default;
+  font-weight: 500;
 
   &:hover {
-    background: ${({ theme }) => `${theme.primary}22`};
-    box-shadow: 0 4px 12px ${({ theme }) => theme.shadow};
+    background: ${({ theme }) => theme.primary};
+    color: white;
+    border-color: ${({ theme }) => theme.primary};
+    box-shadow: 0 4px 12px ${({ theme }) => theme.primary}40;
   }
 `;
 

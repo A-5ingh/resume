@@ -116,7 +116,7 @@ http://localhost:5173
    // themeConfig.ts - Customize colors and settings
    export const themeConfig: ThemeConfig = {
      light: {
-       primary: '#2EA043',
+       primary: '#2770c9ff',
        secondary: '#0D1117',
        text: '#24292F',
        // ... other color settings

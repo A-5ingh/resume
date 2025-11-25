@@ -8,6 +8,7 @@ export interface PersonalInfo {
   phone: string;
   location?: string;
   profileImage?: string;
+  avatarUrl?: string;
 }
 
 export interface Experience {
@@ -65,12 +66,18 @@ export interface ColorScheme {
   border: string;
   shadow: string;
   hover: string;
+  accent: string;
 }
+
+export type ThemeName = 'aurora' | 'pastel' | 'neon';
 
 export interface ThemeConfig {
   light: ColorScheme;
   dark: ColorScheme;
-  defaultMode: 'light' | 'dark';
+}
+
+export interface ThemeStore {
+  [key: string]: ThemeConfig;
 }
 
 // Export configuration types
@@ -83,9 +90,5 @@ export interface ExportConfig {
   word: {
     format: 'A4' | 'Letter';
     margin: number;
-  };
-  powerpoint: {
-    format: '16:9' | '4:3';
-    template?: string;
   };
 }

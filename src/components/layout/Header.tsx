@@ -1,30 +1,40 @@
-import styled from 'styled-components';
-import { BsSun, BsMoon, BsList, BsX, BsPerson, BsBriefcase, BsTools, BsFolder, BsAward, BsEnvelope, BsGithub } from 'react-icons/bs';
-import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import styled, { useTheme as useStyledTheme } from 'styled-components';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Download, Moon, Sun } from 'lucide-react';
+import { useResume } from '../../context/ResumeContext';
+import { useTheme } from '../../context/ThemeContext';
+import { exportAsPDF, exportAsDoc } from '../../utils/exportHelpers';
+import ThemeSelector from './ThemeSelector';
 
-interface HeaderProps {
-  toggleTheme: () => void;
-  isDarkMode: boolean;
-}
-
-const Header = ({ toggleTheme, isDarkMode }: HeaderProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Header = () => {
   const [activeSection, setActiveSection] = useState<string>('');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
+  const { data } = useResume();
+  const { isDarkMode, toggleTheme } = useTheme();
+  const theme = useStyledTheme();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
+          if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
           }
         });
       },
-      { 
-        threshold: [0.2, 0.5, 0.8],
-        rootMargin: '-64px 0px 0px 0px' // Accounts for fixed header
-      }
+      { threshold: 0.3 }
     );
 
     const sections = document.querySelectorAll('section[id]');
@@ -35,222 +45,318 @@ const Header = ({ toggleTheme, isDarkMode }: HeaderProps) => {
     };
   }, []);
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const navLinks = [
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' },
+  ];
 
   return (
-    <HeaderWrapper>
-      <Logo
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        AS
-      </Logo>
-      <NavControls>
-        <NavList>
-          <NavItem>
-            <NavLink href="https://github.com/A-5ingh/resume" target="_blank" title="GitHub">
-              ⭐️ <BsGithub size={20} />
-            </NavLink>
-          </NavItem>
-        </NavList>
-        <MenuToggle onClick={toggleSidebar}>
-          {isOpen ? <BsX size={24} /> : <BsList size={24} />}
-        </MenuToggle>
+    <HeaderContainer $isScrolled={isScrolled}>
+      <Nav>
+        <Logo href="#">
+          {data.personal.name.split(' ')[0]}
+          <span style={{ color: theme.primary }}>.</span>
+        </Logo>
 
-        <ThemeToggle onClick={toggleTheme}>
-          {isDarkMode ? <BsSun /> : <BsMoon />}
-        </ThemeToggle>
-      </NavControls>
-      <Sidebar
-        initial={false}
-        animate={{
-          x: isOpen ? 0 : '100%'
-        }}
-        transition={{ type: 'tween', duration: 0.3 }}
-      >
-        <NavList>
-          <NavItem>
-            <NavLink href="#about" title="About" $isActive={activeSection === 'about'}>
-              <NavIcon><BsPerson size={20} /></NavIcon>
-              <NavText isOpen={isOpen}>About</NavText>
+        <DesktopMenu>
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.name}
+              href={link.href}
+              $isActive={activeSection === link.href.substring(1)}
+            >
+              {link.name}
             </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#experience" title="Experience" $isActive={activeSection === 'experience'}>
-              <NavIcon><BsBriefcase size={20} /></NavIcon>
-              <NavText isOpen={isOpen}>Experience</NavText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#skills" title="Skills" $isActive={activeSection === 'skills'}>
-              <NavIcon><BsTools size={20} /></NavIcon>
-              <NavText isOpen={isOpen}>Skills</NavText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#projects" title="Projects" $isActive={activeSection === 'projects'}>
-              <NavIcon><BsFolder size={20} /></NavIcon>
-              <NavText isOpen={isOpen}>Projects</NavText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#certifications" title="Certifications" $isActive={activeSection === 'certifications'}>
-              <NavIcon><BsAward size={20} /></NavIcon>
-              <NavText isOpen={isOpen}>Certifications</NavText>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#contact" title="Contact" $isActive={activeSection === 'contact'}>
-              <NavIcon><BsEnvelope size={20} /></NavIcon>
-              <NavText isOpen={isOpen}>Contact</NavText>
-            </NavLink>
-          </NavItem>
-        </NavList>
-      </Sidebar>
-    </HeaderWrapper>
+          ))}
+        </DesktopMenu>
+
+        <Actions>
+          <ThemeSelector />
+          <IconButton onClick={toggleTheme} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </IconButton>
+
+          <ExportContainer>
+            <Button onClick={() => setShowExportMenu(!showExportMenu)}>
+              <Download size={18} />
+              <span>Export</span>
+            </Button>
+
+            <AnimatePresence>
+              {showExportMenu && (
+                <ExportMenu
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                >
+                  <ExportOption onClick={() => { exportAsPDF(); setShowExportMenu(false); }}>
+                    PDF (Print)
+                  </ExportOption>
+                  <ExportOption onClick={() => { exportAsDoc(data); setShowExportMenu(false); }}>
+                    Word (ATS)
+                  </ExportOption>
+                </ExportMenu>
+              )}
+            </AnimatePresence>
+          </ExportContainer>
+
+          <MobileMenuButton onClick={() => setIsMobileMenuOpen(true)}>
+            <Menu size={24} />
+          </MobileMenuButton>
+        </Actions>
+      </Nav>
+
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <MobileMenuOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <MobileMenu
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <CloseButton onClick={() => setIsMobileMenuOpen(false)}>
+                <X size={24} />
+              </CloseButton>
+
+              <MobileLinks>
+                {navLinks.map((link) => (
+                  <MobileLink
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    $isActive={activeSection === link.href.substring(1)}
+                  >
+                    {link.name}
+                  </MobileLink>
+                ))}
+              </MobileLinks>
+
+              <MobileActions>
+                <ThemeSelector />
+                <IconButton onClick={toggleTheme}>
+                  {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                </IconButton>
+              </MobileActions>
+            </MobileMenu>
+          </MobileMenuOverlay>
+        )}
+      </AnimatePresence>
+    </HeaderContainer>
   );
 };
 
-const HeaderWrapper = styled.header`
+const HeaderContainer = styled.header<{ $isScrolled: boolean }>`
   position: fixed;
-  top: 0;
+  top: ${({ $isScrolled }) => ($isScrolled ? '1rem' : '0')};
   left: 0;
   right: 0;
-  height: 64px;
-  padding: 0 2rem;
-  background-color: ${props => props.theme.background};
-  border-bottom: 1px solid ${props => props.theme.border};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   z-index: 1000;
+  transition: all 0.3s ease;
+  padding: ${({ $isScrolled }) => ($isScrolled ? '0 1rem' : '1rem 2rem')};
+  display: flex;
+  justify-content: center;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  background: ${({ theme }) => theme.backgroundSecondary}CC;
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease-in-out;
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid ${({ theme }) => theme.border};
+  box-shadow: ${({ theme }) => theme.shadow};
+`;
+
+const Logo = styled.a`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.text};
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+`;
+
+const DesktopMenu = styled.div`
+  display: flex;
+  gap: 2rem;
 
   @media (max-width: 768px) {
-    padding: 0 1rem;
+    display: none;
   }
 `;
 
-const NavControls = styled.div`
+const NavLink = styled.a<{ $isActive?: boolean }>`
+  color: ${({ theme, $isActive }) => ($isActive ? theme.primary : theme.textSecondary)};
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: ${({ $isActive }) => ($isActive ? '100%' : '0')};
+    height: 2px;
+    background: ${({ theme }) => theme.primary};
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+`;
+
+const Actions = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
 `;
 
-const MenuToggle = styled.button`
-  background: none;
+const IconButton = styled(motion.button)`
+  background: transparent;
   border: none;
-  color: ${props => props.theme.text};
+  color: ${({ theme }) => theme.text};
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 8px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease;
+  transition: background 0.3s ease;
 
   &:hover {
-    color: ${props => props.theme.primary};
+    background: ${({ theme }) => theme.hover};
   }
 `;
 
-const Sidebar = styled(motion.nav)`
-  position: fixed;
-  top: 64px;
+const Button = styled.button`
+  background: ${({ theme }) => theme.primary};
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+const ExportContainer = styled.div`
+  position: relative;
+`;
+
+const ExportMenu = styled(motion.div)`
+  position: absolute;
+  top: 100%;
   right: 0;
-  height: calc(100vh - 64px);
-  background-color: ${props => props.theme.background};
-  border-left: 1px solid ${props => props.theme.border};
-  padding: 1rem 0.5rem;
-  overflow-y: auto;
-  backdrop-filter: blur(10px);
+  margin-top: 0.5rem;
+  background: ${({ theme }) => theme.background};
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 0.5rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
-  z-index: 999;
-  width: ${props => props.style?.transform === 'translateX(100%)' ? '60px' : '250px'};
+  gap: 0.5rem;
+  width: 150px;
+  box-shadow: ${({ theme }) => theme.shadow};
+`;
 
-  @media (max-width: 768px) {
-    width: 100%;
-    border-left: none;
-    padding: 1.5rem;
+const ExportOption = styled.button`
+  background: transparent;
+  border: none;
+  color: ${({ theme }) => theme.text};
+  padding: 0.5rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.hover};
   }
 `;
 
-const Logo = styled(motion.div)`
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: ${props => props.theme.primary};
+const MobileMenuButton = styled.button`
+  display: none;
+  background: transparent;
+  border: none;
+  color: ${({ theme }) => theme.text};
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
 `;
 
-const NavList = styled.ul`
+const MobileMenuOverlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+`;
+
+const MobileMenu = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  background: ${({ theme }) => theme.background};
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+`;
+
+const CloseButton = styled.button`
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  color: ${({ theme }) => theme.text};
+  cursor: pointer;
+`;
+
+const MobileLinks = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 `;
 
-const NavItem = styled.li``;
-
-const NavLink = styled.a<{ $isActive?: boolean }>`
-  color: ${props => props.$isActive ? props.theme.primary : props.theme.text};
-  text-decoration: none;
+const MobileLink = styled.a<{ $isActive?: boolean }>`
+  font-size: 1.25rem;
   font-weight: 500;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: ${props => props.$isActive ? props.theme.border : 'transparent'};
-
-  &:hover {
-    color: ${props => props.theme.primary};
-    background-color: ${props => props.theme.border};
-  }
+  color: ${({ theme, $isActive }) => $isActive ? theme.primary : theme.text};
+  text-decoration: none;
 `;
 
-const NavIcon = styled.span`
+const MobileActions = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-`;
-
-const NavText = styled.span<{ isOpen: boolean }>`
-  margin-left: 0.75rem;
-  opacity: ${props => (props.isOpen ? 1 : 0)};
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
-  transition: all 0.2s ease;
-  white-space: nowrap;
-
-  @media (max-width: 768px) {
-    opacity: 1;
-    visibility: visible;
-    font-size: 1.1rem;
-    margin-left: 1.25rem;
-  }
-`;
-
-const ThemeToggle = styled.button`
-  background: none;
-  border: none;
-  color: ${props => props.theme.text};
-  cursor: pointer;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: ${props => props.theme.primary};
-  }
+  gap: 1rem;
+  margin-top: auto;
 `;
 
 export default Header;
