@@ -4,7 +4,7 @@ import { useProjects } from '../../context/ResumeContext';
 import { useState } from 'react';
 import { GlassCard } from '../shared/GlassCard';
 import { GradientText } from '../shared/GradientText';
-import { ExternalLink, Github, Folder } from 'lucide-react';
+import { ExternalLink, Folder } from 'lucide-react';
 
 const Projects = () => {
   const projects = useProjects();

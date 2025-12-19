@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useCertifications } from '../../context/ResumeContext';
+import { ExternalLink } from 'lucide-react';
 
 const Certifications = () => {
   const certifications = useCertifications();
@@ -33,6 +34,11 @@ const Certifications = () => {
             <CertInfo>
               <CertIssuer>{cert.issuer}</CertIssuer>
               <CertDate>{cert.date}</CertDate>
+              {cert.link && cert.link !== '#' && (
+                <CertLink href={cert.link} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink size={18} />
+                </CertLink>
+              )}
             </CertInfo>
           </CertificationCard>
         ))}
@@ -118,6 +124,8 @@ const CertificationCard = styled.div`
     mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.3s ease;
+    /* Ensure the decorative overlay doesn't block clicks */
+    pointer-events: none;
   }
 
   &:hover {
@@ -175,6 +183,27 @@ const CertIssuer = styled.span`
 const CertDate = styled.span`
   color: ${({ theme }) => theme.textSecondary};
   font-size: 0.9rem;
+`;
+
+const CertLink = styled.a`
+  color: ${({ theme }) => theme.text};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.backgroundSecondary};
+  transition: all 0.2s ease;
+  /* Make sure the link is above decorative overlays and remains clickable */
+  position: relative;
+  z-index: 1;
+
+  &:hover {
+    background: ${({ theme }) => theme.primary};
+    color: white;
+    transform: rotate(45deg);
+  }
 `;
 
 export default Certifications;
