@@ -181,7 +181,7 @@ export const resumeData: ResumeData = {
   certifications: [
     {
       name: "GitOps Certified Associate (CGOA) 🌟",
-      issuer: "CD Foundation",
+      issuer: "The Linux Foundation",
       date: "Dec 2025",
       link: "https://ti-user-certificates.s3.amazonaws.com/e0df7fbf-a057-42af-8a1f-590912be5460/29cf353c-53e9-469d-8a23-7da6d6231e7d-amarbir-singh-e1018b52-9d79-4b01-af18-92d738a5e759-certificate.pdf"
     },
