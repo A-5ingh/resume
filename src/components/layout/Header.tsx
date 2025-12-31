@@ -8,7 +8,7 @@ import { exportAsPDF, exportAsDoc } from '../../utils/exportHelpers';
 import ThemeSelector from './ThemeSelector';
 
 // Dropbox resume link
-const DROPBOX_RESUME_URL = 'https://www.dropbox.com/scl/fi/r490m9gcjg2pytaoffwms/Resume-Amar-Latest.pdf?rlkey=0g6dptbn9qceeu3x4oe1x3b98&st=haoc323r&dl=0';
+const DROPBOX_RESUME_URL = 'https://www.dropbox.com/scl/fi/xsu1c70jay61jwecrzp9v/Resume-Amar-Latest.pdf?rlkey=ybcxsm910pjqgsrpllstj1d19&st=69iye1yg&dl=0';
 
 const Header = () => {
   const [activeSection, setActiveSection] = useState<string>('');
