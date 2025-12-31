@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import styled, { useTheme as useStyledTheme } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Download, Moon, Sun } from 'lucide-react';
+import { Menu, X, Download, Moon, Sun, FileText } from 'lucide-react';
 import { useResume } from '../../context/ResumeContext';
 import { useTheme } from '../../context/ThemeContext';
 import { exportAsPDF, exportAsDoc } from '../../utils/exportHelpers';
 import ThemeSelector from './ThemeSelector';
+
+// Dropbox resume link
+const DROPBOX_RESUME_URL = 'https://www.dropbox.com/scl/fi/r490m9gcjg2pytaoffwms/Resume-Amar-Latest.pdf?rlkey=0g6dptbn9qceeu3x4oe1x3b98&st=haoc323r&dl=0';
 
 const Header = () => {
   const [activeSection, setActiveSection] = useState<string>('');
@@ -71,6 +74,10 @@ const Header = () => {
               {link.name}
             </NavLink>
           ))}
+          <ResumeLink href={DROPBOX_RESUME_URL} target="_blank" rel="noopener noreferrer">
+            <FileText size={18} />
+            Resume
+          </ResumeLink>
         </DesktopMenu>
 
         <Actions>
@@ -217,6 +224,36 @@ const NavLink = styled.a<{ $isActive?: boolean }>`
 
   &:hover {
     color: ${({ theme }) => theme.primary};
+  }
+`;
+
+const ResumeLink = styled.a`
+  color: ${({ theme }) => theme.textSecondary};
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: ${({ theme }) => theme.primary};
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+    
+    &:after {
+      width: 100%;
+    }
   }
 `;
 

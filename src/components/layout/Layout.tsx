@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from '../../styles/globalStyles';
 import Header from './Header';
 import Footer from './Footer';
+import BackgroundStars from '../animations/BackgroundRipple';
 import { useTheme } from '../../context/ThemeContext';
 
 interface LayoutProps {
@@ -15,6 +16,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <ThemeProvider theme={currentTheme}>
       <GlobalStyles theme={currentTheme} />
+      <BackgroundStars />
       <Header />
       <Main>{children}</Main>
       <Footer />

@@ -17,14 +17,14 @@ export const ResumeSchema = z.object({
     role: z.string().min(1),
     company: z.string().min(1),
     period: z.string().min(1),
-    description: z.string().min(10),
+    description: z.union([z.string().min(1), z.array(z.string().min(1))]),
     technologies: z.array(z.string()),
     icon: z.any().optional(), // React icons are functions/objects
   })),
   projects: z.array(z.object({
     title: z.string().min(1),
     category: z.string(),
-    description: z.string().min(10),
+    description: z.union([z.string().min(1), z.array(z.string().min(1))]),
     tech: z.array(z.string()),
     link: z.string().url().optional(),
   })),
@@ -49,18 +49,22 @@ export const resumeData: ResumeData = {
   personal: {
     name: "Amarbir Singh",
     role: "Senior Technologist @ Infosys Limited | Cloud & DevOps Architect 🚀 | Full Stack Developer 💻",
-    summary: "14 years of expertise in software development, DevOps, and open-source contributions. Demonstrated expertise in designing and implementing developer tools, automation workflows, and cloud-native solutions. Demonstrated technical leadership as an active contributor to projects such as jHipster and Kyverno, spearheading the design of innovative, scalable CI/CD pipelines and infrastructure as code solutions. Skilled in multiple languages including JavaScript/TypeScript, C#, and Python.",
+    summary: "Highly skilled Cloud Architect with 15 years of experience leading multi-disciplinary teams across software development, DevOps, and automation. Demonstrated expertise in designing and implementing developer tools, automation workflows, and cloud- native solutions. Proven technical leadership as an active contributor to open-source projects like jHipster and Kyverno. Spearheading the design of innovative, scalable CI/CD pipelines and infrastructure as code solutions. Skilled in multiple languages including JavaScript/TypeScript, C#, and Python.",
     email: "amarbir1800@gmail.com",
     phone: "+1 (xxx)-xxx xxxx",
     avatarUrl: "https://github.com/a-5ingh.png"
   },
   experience: [
     {
-      role: "Senior Technologist 👨‍💻",
-      company: "Infosys Limited, Canada",
+      role: "Senior Technologist (Azure Cloud/DevOps Architect) 👨‍💻",
+      company: "Infosys Limited | Mississauga, Canada",
       period: "Apr 2022 - Present",
       icon: FaCloud,
-      description: "Spearheaded cloud-native transformation and DevOps initiatives for a major education system, driving adoption of automated CI/CD pipelines, infrastructure as code, and modern development practices to foster a culture of automation and continuous improvement. Implemented DevOps practices, automated CI/CD pipelines, and infrastructure as code, resulting in 20% reduction in deployment times and improved operational efficiency. Mentored 15+ junior developers in modern development practices, driving adoption of automated workflows and continuous improvement initiatives.",
+       description: [
+         "Reduced deployment cycles by 20% for a Tier-1 education student information system by architecting cloud-native CI/CD pipelines and Bicep-driven IaC.",
+         "Mentored 15+ engineers in modern Cloud, Application Design & DevOps practices, resulting in 100% adoption of automated infrastructure workflows across 4+ teams.",
+         "Increased operational efficiency by implementing a standardized .NET Core architecture that supported cross-functional scaling and continuous delivery.",
+       ],
       technologies: [
         "Azure DevOps 🔄",
         "IaC using Bicep 🏗️",
@@ -70,11 +74,17 @@ export const resumeData: ResumeData = {
       ],
     },
     {
-      role: "Specialist Programmer 👨‍💻",
-      company: "Infosys Limited",
-      period: "Jan 2020 - Apr 2022",
+      role: "Specialist Programmer (Full Stack / DevOps Lead) 👨‍💻",
+      company: "Infosys Limited | Chandigarh, India",
+      period: "Oct 2019 - Apr 2022",
       icon: FaCode,
-      description: "Led development of iLEAD platform with multi-cloud deployment capabilities. Implemented comprehensive CI/CD pipelines, containerization strategies, and infrastructure automation. Developed full-stack applications using modern frameworks.",
+       description: [
+         "Platform Engineering: Architected the Infosys in-house platform, enabling 15-minute rapid deployment of production-ready web applications across Azure, AWS, and On-Prem environments.",
+         "Enabled seamless multi-cloud deployment for the iLEAD platform as measured by 99.9% system availability through the implementation of Kubernetes, Docker, and OpenShift strategies.",
+         "Architected a 'Shift-Left' security framework by integrating DevSecOps pipelines into CloudBees Jenkins and Azure DevOps, standardizing automated security gates across all development workstreams.",
+         "Developed interchangeable, high-standard templates using Angular, React, and VueJS integrated with NodeJS (NestJS) and Spring Boot, supporting complex features like SAP UI5 controls and form-based authentication.",
+         "Engineered containerized solutions for diverse technology stacks (Dotnetcore, NodeJS, Spring boot etc.), improving resource utilization and portability across IIS and cloud-native clusters.",
+       ],
       technologies: [
         "Kubernetes & Docker 🐳",
         "Jenkins & CI/CD 🔄",
@@ -84,29 +94,24 @@ export const resumeData: ResumeData = {
       ],
     },
     {
-      role: "Specialist Programmer/SDET 👨‍💻",
-      company: "Infosys Limited",
-      period: "Dec 2019 - Dec 2020",
+      role: "QA/Automation Lead/SDET 👨‍💻",
+      company: "Infosys Limited | Irvine, US & Chandigarh, India",
+      period: "Feb 2011 - Sept 2019",
       icon: FaRobot,
-      description: "Developed and implemented automated testing solutions for equity trading platforms and complex financial systems. Pioneered RPA solutions using Blue Prism for business process automation.",
+       description: [
+         "Achieved 40% enhancement in test coverage for high-stakes financial applications by leading the design of automated report comparison tools and VBA-based frameworks.",
+         "Automated 85% of regression testing for equity trading platforms by designing custom testing frameworks and implementing RPA solutions using Blue Prism.",
+         "Validated end-to-end business flow for high-stakes Equity Trading Platform and Account Systems, ensuring 100% data accuracy for day-to-day transactions and reporting.",
+         "Established code review standards in Bitbucket and modular automation libraries for 60+ applications, improving code maintainability and decreasing script failure by 20%.",
+         "Coordinated global delivery across US and Indian hubs, ensuring zero-defect releases for major financial services client.",
+         "Engineered custom Excel macros and automated CI batches that accelerated data comparison and report migration tasks, saving estimated 10 hours of manual labor per week.",
+         "Orchestrated the migration of legacy Java/SQR reports to Business Objects, utilizing advanced SQL queries to validate data integrity across thousands of financial records.",
+       ],
       technologies: [
         "Blue Prism RPA 🤖",
         "SQL Server 💾",
         "Testing Frameworks 🎯",
         "Financial Systems 💰"
-      ],
-    },
-    {
-      role: "Various (System Engineer, Test Analyst, SDET) 🔍",
-      company: "Infosys Limited",
-      period: "Feb 2011 - Dec 2019",
-      icon: FaSearch,
-      description: "Led core automation initiatives and developed comprehensive testing frameworks. Created innovative solutions for automated report comparison and enhanced test coverage across multiple applications.",
-      technologies: [
-        "Test Automation 🔄",
-        "VBA Development 📊",
-        "SQL & Databases 💾",
-        "Framework Design 🛠️"
       ],
     }
   ],
@@ -114,29 +119,42 @@ export const resumeData: ResumeData = {
     {
       title: "Infrastructure as Code Resources 🏗️",
       category: "Industry",
-      description: "Authored and published comprehensive technical articles on Infrastructure as Code, contributing to team knowledge sharing and supporting collaborative learning. Developed reusable enterprise modules for cloud resource provisioning, with a focus on developer experience and automation. Implemented GitOps practices for infrastructure management.",
+       description: [
+         "Developed reusable enterprise modules for cloud resource provisioning, which scaled a defense-focused automation strategy across multiple global teams, standardizing deployment practices.",
+         "Implemented robust GitOps practices for infrastructure management, resulting in measurable improvements in deployment consistency and audit compliance.",
+         "Published technical papers on IaC principles, fostering collaborative learning and establishing best practices across the engineering department.",
+       ],
       tech: ["Azure", "Bicep", "ARM Templates", "PowerShell", "DevOps"],
       link: "https://medium.com/@a.student/infrastructure-as-code-azure-bicep-fd2b66076afe"
     },
     {
+      title: "Cloud Migration & Modernization 📚",
+      category: "Industry",
+       description: [
+         "Architected and executed the successful migration of mission critical student information system to the Azure cloud platform, ensuring zero-downtime and enhanced system reliability.",
+         "Pioneered modern DevOps practices in collaboration with cross-functional teams, streamlining deployment processes and driving system reliability improvements by an estimated 25% faster deployment lead time.",
+       ],
+      tech: ["Azure", "DevOps", "CI/CD", "Infrastructure as Code", "Automation"],
+    },
+    {
       title: "JHipster Framework Enhancement ⚡",
       category: "Open Source",
-      description: "Collaborated with the JHipster dotnetcore community as an active contributor and maintainer. Contributed to fix various bugs, new features (terraform scripts), and documentation.",
+       description: [
+         "Collaborated with the JHipster dotnetcore community as an active contributor and maintainer.",
+         "Contributed fixes for various bugs, added new features (terraform scripts), and improved documentation.",
+       ],
       tech: ["EJS", "Node.js", "TypeScript", "Terraform", "IaC", "DotnetCore"],
       link: "https://github.com/jhipster/jhipster-dotnetcore/graphs/contributors"
     },
     {
       title: "Kyverno Security & Policy Engine 🛡️",
       category: "Open Source",
-      description: "Contributing to Kubernetes policy management, implementing security policies and enhancing documentation. Focus on policy as code and security implementations.",
+       description: [
+         "Contributing to Kubernetes policy management, implementing security policies and enhancing documentation.",
+         "Focus on policy as code and security implementations.",
+       ],
       tech: ["Kubernetes", "Go", "Policy as Code", "Security", "DevOps"],
       link: "https://github.com/kyverno/community/blob/main/CONTRIBUTORS.md"
-    },
-    {
-      title: "Cloud Migration & Modernization 📚",
-      category: "Industry",
-      description: "Strategically led and collaborated with cross-functional teams to architect and execute the successful migration of a large-scale education system to Azure cloud. Collaborated with cross-functional teams to pioneer modern DevOps practices, automate deployment processes, and drive improvements in overall system reliability.",
-      tech: ["Azure", "DevOps", "CI/CD", "Infrastructure as Code", "Automation"],
     }
   ],
   skills: [
@@ -180,16 +198,16 @@ export const resumeData: ResumeData = {
   ],
   certifications: [
     {
-      name: "GitOps Certified Associate (CGOA) 🌟",
-      issuer: "The Linux Foundation",
-      date: "Dec 2025",
-      link: "https://ti-user-certificates.s3.amazonaws.com/e0df7fbf-a057-42af-8a1f-590912be5460/29cf353c-53e9-469d-8a23-7da6d6231e7d-amarbir-singh-e1018b52-9d79-4b01-af18-92d738a5e759-certificate.pdf"
-    },
-    {
       name: "Certified Kyverno Associate (CKA) 🌟",
       issuer: "The Linux Foundation",
       date: "Dec 2025",
       link: "https://ti-user-certificates.s3.amazonaws.com/e0df7fbf-a057-42af-8a1f-590912be5460/29cf353c-53e9-469d-8a23-7da6d6231e7d-amarbir-singh-c276134a-0d6d-44df-93bc-c811d457d5dd-certificate.pdf"
+    },
+    {
+      name: "GitOps Certified Associate (CGOA) 🌟",
+      issuer: "The Linux Foundation",
+      date: "Nov 2025",
+      link: "https://ti-user-certificates.s3.amazonaws.com/e0df7fbf-a057-42af-8a1f-590912be5460/29cf353c-53e9-469d-8a23-7da6d6231e7d-amarbir-singh-e1018b52-9d79-4b01-af18-92d738a5e759-certificate.pdf"
     },
     {
       name: "Microsoft Azure Administrator Associate (AZ-104) ⭐",

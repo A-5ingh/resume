@@ -15,7 +15,7 @@ export interface Experience {
   role: string;
   company?: string;
   period: string;
-  description: string;
+  description: string | string[];
   technologies: string[];
   icon?: IconType;
 }
@@ -23,7 +23,7 @@ export interface Experience {
 export interface Project {
   title: string;
   category: 'Open Source' | 'Industry';
-  description: string;
+  description: string | string[];
   tech: string[];
   link?: string;
 }
