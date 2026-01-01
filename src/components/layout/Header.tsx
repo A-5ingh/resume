@@ -6,9 +6,7 @@ import { useResume } from '../../context/ResumeContext';
 import { useTheme } from '../../context/ThemeContext';
 import { exportAsPDF, exportAsDoc } from '../../utils/exportHelpers';
 import ThemeSelector from './ThemeSelector';
-
-// Dropbox resume link
-const DROPBOX_RESUME_URL = 'https://www.dropbox.com/scl/fi/xsu1c70jay61jwecrzp9v/Resume-Amar-Latest.pdf?rlkey=ybcxsm910pjqgsrpllstj1d19&st=69iye1yg&dl=0';
+import resumePDF from '../../assets/resume.pdf';
 
 const Header = () => {
   const [activeSection, setActiveSection] = useState<string>('');
@@ -74,7 +72,7 @@ const Header = () => {
               {link.name}
             </NavLink>
           ))}
-          <ResumeLink href={DROPBOX_RESUME_URL} target="_blank" rel="noopener noreferrer">
+          <ResumeLink href={resumePDF} target="_blank" rel="noopener noreferrer">
             <FileText size={18} />
             Resume
           </ResumeLink>
