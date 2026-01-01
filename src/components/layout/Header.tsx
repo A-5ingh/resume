@@ -143,6 +143,10 @@ const Header = () => {
                     {link.name}
                   </MobileLink>
                 ))}
+                <MobileResumeLink href={resumePDF} target="_blank" rel="noopener noreferrer">
+                  <FileText size={20} />
+                  Resume
+                </MobileResumeLink>
               </MobileLinks>
 
               <MobileActions>
@@ -386,6 +390,21 @@ const MobileLink = styled.a<{ $isActive?: boolean }>`
   font-weight: 500;
   color: ${({ theme, $isActive }) => $isActive ? theme.primary : theme.text};
   text-decoration: none;
+`;
+
+const MobileResumeLink = styled.a`
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text};
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
 `;
 
 const MobileActions = styled.div`

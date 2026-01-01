@@ -73,7 +73,12 @@ const HeroSection = styled.section`
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: 2rem;
+  padding: 2rem 1.5rem;
+  
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+    min-height: auto;
+  }
 `;
 
 const BackgroundGradient = styled.div`
@@ -118,10 +123,12 @@ const Name = styled.h1`
   font-size: 5rem;
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  padding-bottom: 0.2em; // Prevent clipping of descenders
+  padding-bottom: 0.2em;
+  word-break: break-word;
   
   @media (max-width: 768px) {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -130,9 +137,12 @@ const Title = styled.div`
   color: ${({ theme }) => theme.text};
   margin-bottom: 2rem;
   height: 3rem;
+  line-height: 1.5;
   
   @media (max-width: 768px) {
     font-size: 1.5rem;
+    height: auto;
+    min-height: 2rem;
   }
 `;
 
@@ -144,7 +154,10 @@ const Description = styled.p`
   max-width: 700px;
   
   @media (max-width: 768px) {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 100%;
+    padding: 0 1rem;
   }
 `;
 
@@ -169,6 +182,13 @@ const Button = styled.a`
   justify-content: center;
   gap: 0.75rem;
   transition: all 0.3s ease;
+  white-space: nowrap;
+  
+  @media (max-width: 768px) {
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    white-space: normal;
+  }
 `;
 
 const PrimaryButton = styled(Button)`
@@ -202,6 +222,12 @@ const Avatar = styled(motion.div)`
   padding: 4px;
   background: ${({ theme }) => theme.accent};
   box-shadow: 0 0 20px ${({ theme }) => theme.primary}40;
+  
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1.5rem;
+  }
   
   img {
     width: 100%;
