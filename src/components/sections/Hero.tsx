@@ -27,7 +27,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Greeting>Hello, I'm</Greeting>
+          <Greeting>Hello 👋, I'm</Greeting>
           <Name>
             <GradientText>{name}</GradientText>
           </Name>
@@ -135,7 +135,7 @@ const Name = styled.h1`
 const Title = styled.div`
   font-size: 2rem;
   color: ${({ theme }) => theme.text};
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   height: 3rem;
   line-height: 1.5;
   
