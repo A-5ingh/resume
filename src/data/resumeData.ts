@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { ResumeData } from './types';
 import { BsGithub, BsLinkedin, BsEnvelope, BsMedium, BsStackOverflow } from 'react-icons/bs';
-import { FaCloud, FaCode, FaSearch, FaRobot } from 'react-icons/fa';
+import { FaCloud, FaCode, FaRobot } from 'react-icons/fa';
 
 // Zod Schema for Validation
 export const ResumeSchema = z.object({
