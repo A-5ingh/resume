@@ -48,8 +48,8 @@ export const ResumeSchema = z.object({
 export const resumeData: ResumeData = {
   personal: {
     name: "Amarbir Singh",
-    role: "Senior Technologist @ Infosys Limited | Cloud & DevOps Architect 🚀 | Full Stack Developer 💻",
-    summary: "Highly skilled Cloud Architect with 15 years of experience leading multi-disciplinary teams across software development, DevOps, and automation. Demonstrated expertise in designing and implementing developer tools, automation workflows, and cloud- native solutions. Proven technical leadership as an active contributor to open-source projects like jHipster and Kyverno. Spearheading the design of innovative, scalable CI/CD pipelines and infrastructure as code solutions. Skilled in multiple languages including JavaScript/TypeScript, C#, and Python.",
+    role: "Cloud ☁️ & DevSecOps 💻 Architect | 15 Years Building Scalable Infrastructure, Full Stack Apps & CI/CD | Open Source Contributor (jHipster · Kyverno)",
+    summary: "Cloud & DevSecOps Architect with 15 years at Infosys, specializing in multi-cloud infrastructure, CI/CD automation, and full stack development. Active open source maintainer for CNCF-ecosystem projects jHipster and Kyverno — a rare differentiator at the architect level. Proven track record of leading cross-functional teams, reducing deployment cycles by 20%, automating 85% of regression testing, and mentoring 15+ engineers to full DevOps adoption. Skilled in Azure, Kubernetes, GitHub Actions, and modern application frameworks across JavaScript, TypeScript, C#, and Python.",
     email: "amarbir1800@gmail.com",
     phone: "+1 (xxx)-xxx xxxx",
     avatarUrl: "https://github.com/a-5ingh.png"
