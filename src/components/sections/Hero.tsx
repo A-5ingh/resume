@@ -136,12 +136,11 @@ const Title = styled.div`
   font-size: 2rem;
   color: ${({ theme }) => theme.text};
   margin-bottom: 4rem;
-  height: 3rem;
+  min-height: 3rem;
   line-height: 1.5;
   
   @media (max-width: 768px) {
     font-size: 1.5rem;
-    height: auto;
     min-height: 2rem;
   }
 `;
