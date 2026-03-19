@@ -1,9 +1,89 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useSocial } from '../../context/ResumeContext';
+import { useState } from 'react';
+import { useSocial, useResume } from '../../context/ResumeContext';
 
 const Contact = () => {
   const socialLinks = useSocial();
+  const { data } = useResume();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email format';
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      console.log('Form validation failed');
+      return;
+    }
+
+    console.log('Form validation passed, attempting to open mailto');
+
+    // Create email link
+    const subject = `Message from ${formData.name}`;
+    const body = `From: ${formData.email}\n\n${formData.message}`;
+    const mailtoLink = `mailto:${data.personal.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    console.log('Mailto link:', mailtoLink);
+
+    // Use anchor element to trigger mailto - most reliable method
+    const link = document.createElement('a');
+    link.href = mailtoLink;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    console.log('Mailto link triggered');
+
+    // Reset form after submission
+    setTimeout(() => {
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      });
+    }, 500);
+  };
 
   return (
     <ContactSection id="contact">
@@ -45,20 +125,45 @@ const Contact = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          onSubmit={handleSubmit}
         >
           <FormGroup>
             <Label>Name</Label>
-            <Input type="text" placeholder="Your name" />
+            <Input
+              type="text"
+              name="name"
+              placeholder="Your name"
+              value={formData.name}
+              onChange={handleChange}
+              hasError={!!errors.name}
+            />
+            {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
           </FormGroup>
           <FormGroup>
             <Label>Email</Label>
-            <Input type="email" placeholder="Your email" />
+            <Input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              value={formData.email}
+              onChange={handleChange}
+              hasError={!!errors.email}
+            />
+            {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
           </FormGroup>
           <FormGroup>
             <Label>Message</Label>
-            <TextArea placeholder="Your message" rows={5} />
+            <TextArea
+              name="message"
+              placeholder="Your message"
+              rows={5}
+              value={formData.message}
+              onChange={handleChange}
+              hasError={!!errors.message}
+            />
+            {errors.message && <ErrorMessage>{errors.message}</ErrorMessage>}
           </FormGroup>
-          <SubmitButton>Send Message</SubmitButton>
+          <SubmitButton type="submit">Send Message</SubmitButton>
         </ContactForm>
       </ContentWrapper>
     </ContactSection>
@@ -175,10 +280,10 @@ const Label = styled.label`
   font-weight: 500;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ hasError?: boolean }>`
   padding: 0.75rem 1rem;
   border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.border};
+  border: 2px solid ${({ theme, hasError }) => hasError ? '#ef4444' : theme.border};
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
   font-size: 1rem;
@@ -186,15 +291,15 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.primary};
-    box-shadow: 0 0 0 2px ${({ theme }) => `${theme.primary}33`};
+    border-color: ${({ theme, hasError }) => hasError ? '#ef4444' : theme.primary};
+    box-shadow: 0 0 0 2px ${({ theme, hasError }) => hasError ? '#ef444433' : `${theme.primary}33`};
   }
 `;
 
-const TextArea = styled.textarea`
+const TextArea = styled.textarea<{ hasError?: boolean }>`
   padding: 0.75rem 1rem;
   border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.border};
+  border: 2px solid ${({ theme, hasError }) => hasError ? '#ef4444' : theme.border};
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
   font-size: 1rem;
@@ -204,8 +309,8 @@ const TextArea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.primary};
-    box-shadow: 0 0 0 2px ${({ theme }) => `${theme.primary}33`};
+    border-color: ${({ theme, hasError }) => hasError ? '#ef4444' : theme.primary};
+    box-shadow: 0 0 0 2px ${({ theme, hasError }) => hasError ? '#ef444433' : `${theme.primary}33`};
   }
 `;
 
@@ -235,6 +340,13 @@ const SubmitButton = styled.button`
       0 4px 12px ${({ theme }) => `${theme.primary}66`},
       0 0 0 2px ${({ theme }) => theme.primary};
   }
+`;
+
+const ErrorMessage = styled.span`
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
 `;
 
 export default Contact;
